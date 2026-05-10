@@ -1,0 +1,22 @@
+{
+  "name": "traveloop-backend",
+  "version": "1.0.0",
+  "description": "Smart travel planning platform backend with AI-powered itinerary generation",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": ["travel", "itinerary", "planning", "ai", "hackathon"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "@supabase/supabase-js": "^2.39.0",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "axios": "^1.6.2",
+    "uuid": "^9.0.1"
+  }
+}

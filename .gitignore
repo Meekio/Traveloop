@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build
+dist/
+build/
+
+# Test files
+test-*.js
+*test*.js
+
+# Documentation (except README.md)
+BACKEND_STATUS.md
+CREDENTIALS_CHECKLIST.md
+FINAL_STATUS.md
+GET_API_KEYS.md
+QUICK_TEST_GUIDE.md
+READY_TO_TEST.md
+SETUP.md
+TESTING_GUIDE.md
+TEST_RESULTS.md
+
+# Postman collection
+Traveloop_API_Collection.json
+
+# Kiro settings
+.kiro/
