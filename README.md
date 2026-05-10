@@ -6,8 +6,8 @@ Smart travel planning platform with AI-powered itinerary generation for hackatho
 
 This repository contains both the **frontend** and **backend** components of Traveloop:
 
-- **Frontend**: React Native mobile application (coming soon)
-- **Backend**: Express.js REST API (current implementation)
+- **Frontend**: React web application ✅
+- **Backend**: Express.js API layer + Supabase (Database & Auth) ✅
 
 ---
 
@@ -25,7 +25,11 @@ npm install
 # Copy the example env file
 cp .env.example .env
 
-# Edit .env and add your Supabase credentials
+# Edit .env and add your credentials:
+# - Supabase URL and keys
+# - Gemini AI API key
+# - OpenWeather API key
+# - Google Places API key
 # See SETUP.md for detailed instructions
 ```
 
@@ -52,62 +56,55 @@ node test-api.js
 
 ### 📚 Full Backend Setup Guide
 
-See [SETUP.md](./SETUP.md) for detailed setup instructions including:
-- How to get Supabase credentials
-- How to get API keys (Gemini, OpenWeather, etc.)
-- Troubleshooting common issues
 
----
 
 ## 📱 Frontend Setup
 
 ### Prerequisites
 - Node.js (v16 or higher)
-- React Native development environment
-- iOS Simulator (Mac) or Android Emulator
+- npm or yarn
 
 ### Installation
 
 ```bash
-# Navigate to frontend directory (when available)
+# Navigate to frontend directory
 cd frontend
 
 # Install dependencies
 npm install
 
-# For iOS (Mac only)
-cd ios && pod install && cd ..
-
-# Start Metro bundler
+# Start development server
 npm start
-
-# Run on iOS
-npm run ios
-
-# Run on Android
-npm run android
 ```
+
+The app will open at `http://localhost:3000`
 
 ### Frontend Environment Variables
 
 Create a `.env` file in the frontend directory:
 
 ```env
-API_BASE_URL=http://localhost:3000
+REACT_APP_API_BASE_URL=http://localhost:3000
 # Or your deployed backend URL
-# API_BASE_URL=https://your-backend.onrender.com
+# REACT_APP_API_BASE_URL=https://your-backend.onrender.com
+
+REACT_APP_SUPABASE_URL=your_supabase_project_url
+REACT_APP_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+REACT_APP_GOOGLE_MAPS_API_KEY=your_google_maps_key
 ```
 
 ### Frontend Features
-- 📱 **Native Mobile Experience** - Built with React Native
+- 🌐 **Responsive Web App** - Works on desktop and mobile browsers
 - 🎨 **Modern UI/UX** - Intuitive and beautiful interface
 - 🔐 **Secure Authentication** - Login/Signup with Supabase
 - 🗺️ **Interactive Trip Planning** - Visual trip builder
 - 📍 **Map Integration** - View destinations and activities on map
-- 💰 **Budget Management** - Track expenses on the go
+- 💰 **Budget Management** - Track expenses in real-time
 - 🤖 **AI Suggestions** - Get AI-generated itineraries
 - 🌤️ **Weather Integration** - Real-time weather for destinations
 - 🔗 **Share Trips** - Share your plans with friends
+- 📱 **Mobile Responsive** - Optimized for all screen sizes
 
 ---
 
@@ -126,21 +123,21 @@ API_BASE_URL=http://localhost:3000
 
 ### Backend
 - **Framework**: Express.js (Node.js)
-- **Database**: PostgreSQL (Supabase)
-- **Authentication**: Supabase Auth
+- **Database & Auth**: Supabase (PostgreSQL + Auth)
 - **External APIs**: 
   - Gemini AI (itinerary generation)
   - OpenWeatherMap (weather)
   - GeoDB/Teleport (city search)
   - Google Places (activity discovery)
 
-### Frontend (Coming Soon)
-- **Framework**: React Native
+### Frontend
+- **Framework**: React
 - **State Management**: Redux / Context API
-- **Navigation**: React Navigation
-- **Maps**: React Native Maps
-- **UI Components**: React Native Paper / Native Base
+- **Routing**: React Router
+- **Maps**: Google Maps / Leaflet
+- **UI Components**: Material-UI / Tailwind CSS
 - **HTTP Client**: Axios
+- **Backend**: Supabase (Database & Authentication)
 
 ## 📡 API Endpoints
 
@@ -211,32 +208,33 @@ node test-api.js
 
 ```
 traveloop/
-├── backend/             # Backend API (current)
+├── backend/             # Express.js API Layer ✅
 │   ├── src/
 │   │   ├── config/          # Configuration files
 │   │   │   ├── env.js       # Environment validation
-│   │   │   └── supabase.js  # Supabase client
+│   │   │   └── supabase.js  # Supabase client setup
 │   │   ├── controllers/     # Request handlers
 │   │   ├── middleware/      # Express middleware
 │   │   ├── routes/          # API routes
-│   │   ├── services/        # Business logic
+│   │   ├── services/        # Business logic & external APIs
 │   │   ├── app.js           # Express app setup
 │   │   └── server.js        # Server entry point
 │   ├── database/
-│   │   └── schema.sql       # Database schema
+│   │   └── schema.sql       # Supabase database schema
 │   ├── .env.example
 │   └── package.json
 │
-├── frontend/            # React Native app (coming soon)
+├── frontend/            # React web app ✅
 │   ├── src/
 │   │   ├── components/      # Reusable components
-│   │   ├── screens/         # App screens
-│   │   ├── navigation/      # Navigation setup
-│   │   ├── services/        # API calls
-│   │   ├── store/           # State management
+│   │   ├── pages/           # Page components
+│   │   ├── services/        # API calls to backend
+│   │   ├── context/         # State management
 │   │   ├── utils/           # Helper functions
+│   │   ├── styles/          # CSS/styling
 │   │   └── App.js           # App entry point
-│   ├── assets/              # Images, fonts, etc.
+│   ├── public/              # Static assets
+│   ├── .env.example
 │   └── package.json
 │
 └── README.md            # This file
@@ -270,22 +268,33 @@ fly deploy
 
 ### Frontend Deployment
 
-#### Option 1: Expo (Recommended for React Native)
+#### Option 1: Vercel (Recommended)
 ```bash
-# Install Expo CLI
-npm install -g expo-cli
+# Install Vercel CLI
+npm install -g vercel
 
-# Build for iOS
-expo build:ios
-
-# Build for Android
-expo build:android
+# Deploy
+vercel
 ```
 
-#### Option 2: App Store / Google Play
-- Follow React Native's official deployment guides
-- iOS: [React Native iOS Deployment](https://reactnative.dev/docs/publishing-to-app-store)
-- Android: [React Native Android Deployment](https://reactnative.dev/docs/signed-apk-android)
+#### Option 2: Netlify
+1. Push code to GitHub
+2. Go to [netlify.com](https://netlify.com)
+3. New site from Git
+4. Connect your repo
+5. Build command: `npm run build`
+6. Publish directory: `build`
+7. Add environment variables
+8. Deploy!
+
+#### Option 3: GitHub Pages
+```bash
+# Add to package.json
+"homepage": "https://yourusername.github.io/traveloop"
+
+# Deploy
+npm run deploy
+```
 
 ## 🐛 Troubleshooting
 
@@ -305,17 +314,19 @@ expo build:android
 
 ### Frontend Issues
 
-#### Metro bundler errors
-- Clear cache: `npm start -- --reset-cache`
+#### Build errors
+- Clear cache: `npm start -- --reset-cache` or delete `.cache` folder
 - Delete `node_modules` and reinstall: `rm -rf node_modules && npm install`
+- Clear build folder: `rm -rf build`
 
-#### iOS build issues
-- Clean build folder in Xcode
-- Reinstall pods: `cd ios && pod deintegrate && pod install`
+#### API connection issues
+- Check `REACT_APP_API_BASE_URL` in `.env` file
+- Ensure backend server is running
+- Check CORS settings in backend
 
-#### Android build issues
-- Clean gradle: `cd android && ./gradlew clean`
-- Check Android SDK is properly installed
+#### Map not loading
+- Verify `REACT_APP_GOOGLE_MAPS_API_KEY` is set correctly
+- Check API key has Maps JavaScript API enabled in Google Cloud Console
 
 ## 📝 Development
 
@@ -330,22 +341,22 @@ npm start
 
 ### Frontend Development
 ```bash
-# Start Metro bundler
+# Start development server
 npm start
 
-# Run on iOS simulator
-npm run ios
-
-# Run on Android emulator
-npm run android
+# Build for production
+npm run build
 
 # Run tests
 npm test
+
+# Run linter
+npm run lint
 ```
 
 ## 🎯 Hackathon Tips
 
-### Backend (Completed ✅)
+### Backend ✅
 1. ✅ Auth (signup/login)
 2. ✅ Create trip
 3. ✅ Add stops (cities)
@@ -355,19 +366,24 @@ npm test
 7. ✅ Budget tracking
 8. ✅ Notes/Checklist
 
-### Frontend (Priority for Demo)
-1. 🎯 Auth screens (login/signup)
-2. 🎯 Trip list and creation
-3. 🎯 Trip details with stops
-4. 🎯 Activity management
-5. 🎯 AI itinerary generation UI
-6. 🎯 Basic map view
+### Frontend ✅
+1. ✅ Auth screens (login/signup)
+2. ✅ Trip list and creation
+3. ✅ Trip details with stops
+4. ✅ Activity management
+5. ✅ AI itinerary generation UI
+6. ✅ Interactive map view
+7. ✅ Budget tracking UI
+8. ✅ Responsive design
 
-**Can skip if time is tight:**
-- Advanced animations
-- Offline mode
-- Push notifications
-- Complex map interactions
+**Demo Flow:**
+1. Sign up / Login
+2. Create a new trip
+3. Add destinations (stops)
+4. Generate AI itinerary
+5. View on map
+6. Track budget
+7. Share trip link
 
 ## 🤝 Contributing
 
